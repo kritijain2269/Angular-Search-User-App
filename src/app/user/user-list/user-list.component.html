@@ -1,0 +1,33 @@
+<div class="container-fluid">
+ <div class="row">
+   <div class="col">
+      <div class="input-group mb-3">
+          <input
+            type="text"
+            [(ngModel)]="searchText"
+            placeholder="Search Text Here"
+            class="form-control"
+            aria-label="search textbox"
+            aria-describedby="input box for search text"
+          />
+        </div>
+   </div>
+ </div>
+
+  <!-- <input type="text" [(ngModel)]="searchText" placeholder="Search Text Here"> -->
+  <div
+    *ngIf="
+      filteredUserList.length > 0;
+      then userListTemplate;
+      else noResultTemplate
+    "
+  ></div>
+  <ng-template #userListTemplate>
+      <ul class="list-group" *ngFor="let user of filteredUserList">
+          <li class="list-group-item">{{ user.name }}</li>
+        </ul>
+  </ng-template>
+  <ng-template #noResultTemplate>
+    No user found
+  </ng-template>
+</div>
