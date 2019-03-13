@@ -4,7 +4,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { FormsModule } from '@angular/forms';
 import { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
-import { UserResolver } from 'src/app/shared/_services/user.resolver';
+import { UserResolver } from 'src/app/shared/resolver/user.resolver';
 
 const routes: Routes = [
   {path: '', component: UserListComponent, resolve: {userList : UserResolver}}

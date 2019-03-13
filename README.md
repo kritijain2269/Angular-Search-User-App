@@ -4,6 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 This application will let you search for a particular user whose name starts with the given search text from a list of predefined users.
 
+Angular features that have been used in this application are
+- Modularity for making the code more scalabale and maintainable.
+- Lazy Loading is used to load the module only when user interacts with it.
+- Interceptors for showing loader while fethcing response from HTTP request.
+- Resolvers is used so that any route will only be displayed to the user when all the data has    been loaded.
+- Bootstrap for enhanced user experience and to make application responsive.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

@@ -1,6 +1,19 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const User = require("./models/user");
+mongoose
+  .connect(
+    "mongodb+srv://testUser123:ENqy5mBCNcqCv9mb@cluster0-qwolp.mongodb.net/test?retryWrites=true",
+    { useNewUrlParser: true }
+  )
+  .then(database => {
+    console.log("Connected to database successfully.");
+  })
+  .catch(() => {
+    console.log("Connection to database failed");
+  });
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -13,30 +26,35 @@ app.use((req, res, next) => {
 
 app.get("/users", (req, res, next) => {
   let userList = [];
-  const users = [
-    { id: 1, name: "Kriti Jain" },
-    { id: 2, name: "Harlan Holmquist" },
-    { id: 3, name: "Mariana Bolt" },
-    { id: 4, name: "Letty Culver" },
-    { id: 5, name: "Lillian Ocon" },
-    { id: 6, name: "Nicolle Velez" },
-    { id: 7, name: "Tom Harris" },
-    { id: 8, name: "Andy James" },
-    { id: 9, name: "Ben Geller" },
-    { id: 10, name: "Ross Geller" }
-  ];
+
   if (req.query.searchText) {
-    const regex = new RegExp('^' + req.query.searchText, 'i')
-    userList = users.filter(x => {
-      if (regex.test(x.name)) {
-        return x;
+    User.find(
+      { name: { $regex: "^" + req.query.searchText, $options: "i" } },
+      function(err, user) {
+        if (err) {
+          error();
+        }
+        user.forEach(element => {
+          userList.push(element);
+        });
+        res.status(200).json(userList);
       }
-    });
+    );
   } else {
-    userList = users;
+    User.find(function(err, user) {
+      if (err) {
+        error();
+      }
+      user.forEach(element => {
+        userList.push(element);
+      });
+      res.status(200).json(userList);
+    });
   }
-  res.status(200).json(userList);
 });
 
+function error() {
+  return res.status(500).send(err.message);
+}
 
 module.exports = app;

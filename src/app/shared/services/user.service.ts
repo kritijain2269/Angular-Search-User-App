@@ -34,7 +34,7 @@ export class UserService {
   public getUserList(searchText = ''): Observable<any> {
     const params = new HttpParams().set('searchText', searchText);
     return this.http.get(this.apiConfig.url + 'users', {params}).pipe(
-      map(this.extractData),
+       map(this.extractData),
       catchError(this.handleError)
     );
   }

@@ -1,30 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../shared/_models/user';
-import { UserService } from '../../shared/_services/user.service';
+import { User } from '../../common/models/user';
+import { UserService } from '../../shared/services/user.service';
 import { CustomMessages } from '../../../assets/config/messagesConfig';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs/internal/Subject';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
   private userList: User[] = [];
   private filteredUserList: User[] = [];
-  private SearchText: string;
+  private searchText: string;
+  private userListSub: Subscription;
   customMessages = CustomMessages;
-
-  get searchText(): string {
-    return this.SearchText;
-  }
-  set searchText(value: string) {
-    this.SearchText = value;
-    this.filteredUserList = this.SearchText
-      ? this.getFilteredUserList(this.SearchText)
-      : this.userList;
-  }
 
   constructor(
     private userService: UserService,
@@ -32,7 +24,7 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe(
+    this.userListSub = this.activatedRoute.data.subscribe(
       response => {
         this.userList = response.userList;
         this.filteredUserList = this.userList;
@@ -43,12 +35,16 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  getFilteredUserList(searchText): User[] {
-    searchText = searchText.toLowerCase();
-    return this.filteredUserList = this.userService.getUserList(searchText).subscribe(data => {
-      return this.filteredUserList = data;
-      console.log(data);
+  SearchUser(): void {
+    this.userListSub = this.userService.getUserList(this.searchText).subscribe(data => {
+      this.filteredUserList = data;
+    },
+    error => {
+      console.error(this.customMessages.apiCallFailed);
     });
-    // return this.filteredUserList;
+  }
+
+  ngOnDestroy() {
+    this.userListSub.unsubscribe();
   }
 }
