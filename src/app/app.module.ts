@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { LoaderInterceptorService } from 'src/app/shared/interceptor/loader-inte
     AppRoutingModule,
     HttpClientModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: LoaderInterceptorService,

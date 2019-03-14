@@ -8,7 +8,7 @@ Angular features that have been used in this application are
 - Modularity for making the code more scalabale and maintainable.
 - Lazy Loading is used to load the module only when user interacts with it.
 - Interceptors for showing loader while fethcing response from HTTP request.
-- Resolvers is used so that any route will only be displayed to the user when all the data has    been loaded.
+- Resolver is used so that any route will only be displayed to the user when all the data has    been loaded.
 - Bootstrap for enhanced user experience and to make application responsive.
 
 ## Development server
@@ -16,6 +16,8 @@ Angular features that have been used in this application are
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 Run `npm run start:nodeserver` for a node server. Navigate to `http://localhost:3000/`. This will start the node server.
+
+You can use `ng serve` and `npm run start:nodeserver` simultaneoulsy to run the application.
 
 ## Code scaffolding
 

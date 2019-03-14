@@ -7,5 +7,4 @@ import { OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Manage 247 Test';
 }
