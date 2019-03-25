@@ -31,11 +31,18 @@ export class UserService {
     return body || {};
   }
 
-  public getUserList(searchText = ''): Observable<any> {
+  public getUserList(searchText): Observable<any> {
     const params = new HttpParams().set('searchText', searchText);
-    return this.http.get(this.apiConfig.url + 'users', {params}).pipe(
+    return this.http.get(this.apiConfig.url + `user/${searchText}`).pipe(
        map(this.extractData),
       catchError(this.handleError)
     );
+  }
+
+  public getAllUsers() {
+    return this.http.get(this.apiConfig.url + 'users').pipe(
+      map(this.extractData),
+     catchError(this.handleError)
+   );
   }
 }

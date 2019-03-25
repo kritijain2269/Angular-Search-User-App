@@ -14,7 +14,11 @@ export class LoaderInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.showLoader();
-    return next.handle(req).pipe(tap((event: HttpEvent<any>) => {
+    const authToken = localStorage.getItem('token');
+    const authRequest = req.clone({
+      headers : req.headers.set('Authorization', `Bearer ${authToken}` )
+    });
+    return next.handle(authRequest).pipe(tap((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
         this.onEnd();
       }

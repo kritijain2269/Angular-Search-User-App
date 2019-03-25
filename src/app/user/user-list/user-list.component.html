@@ -2,14 +2,13 @@
  <div class="row">
    <div class="col">
       <div class="input-group mb-3">
-          <input
+          <input #searchTextRef
+            id = "search-box"
             type="text"
-            [(ngModel)]="searchText"
             placeholder="Search Text Here"
             class="form-control"
             aria-label="search textbox"
             aria-describedby="input box for search text"
-            (keyup)="SearchUser()"
           />
         </div>
    </div>

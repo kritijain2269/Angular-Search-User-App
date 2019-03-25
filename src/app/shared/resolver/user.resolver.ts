@@ -12,7 +12,7 @@ export class UserResolver implements Resolve<any> {
   constructor(private userService: UserService) {}
 
   resolve(route: ActivatedRouteSnapshot) {
-    return this.userService.getUserList();
+    return this.userService.getAllUsers();
   }
 
 
